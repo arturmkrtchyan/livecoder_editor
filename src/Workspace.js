@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SplitPane from 'react-split-pane'
 import CodeEditor from './CodeEditor'
+import CodeEditorToolbar from './CodeEditorToolbar'
 import Console from './Console'
 
 class Workspace extends Component {
@@ -27,8 +28,8 @@ class Workspace extends Component {
     const calculatedConsoleWidth = innerWidth - editorNewWidth;
     console.log('Editor New Width: ' + editorNewWidth);
     console.log('Console New Width: ' + calculatedConsoleWidth);
-    this.setState({ 
-        editorWidth: editorNewWidth, 
+    this.setState({
+        editorWidth: editorNewWidth,
         editorHeight: innerHeight - 55,
         consoleWidth: calculatedConsoleWidth,
         consoleHeight: innerHeight
@@ -39,25 +40,26 @@ class Workspace extends Component {
     console.log('updateDimensions');
     const { innerHeight, innerWidth } = window;
     const calculatedConsoleWidth = innerWidth - this.state.editorWidth;
-    this.setState((prevState, props) => { 
+    this.setState((prevState, props) => {
         return {
-            editorHeight: innerHeight - 55, 
-            consoleHeight: innerHeight, 
+            editorHeight: innerHeight - 55,
+            consoleHeight: innerHeight,
             consoleWidth: calculatedConsoleWidth
         }
     });
   }
-  
+
   render() {
     return (
         <div>
+            <CodeEditorToolbar />
             <SplitPane onChange={this.handleOnChange} split="vertical" minSize={this.editorMinWidth} maxSize={-1 * this.consoleMinWidth} defaultSize={this.state.editorWidth}>
                 <CodeEditor language={this.state.language}
-                    theme={this.state.theme} 
-                    width={this.state.editorWidth} 
+                    theme={this.state.theme}
+                    width={this.state.editorWidth}
                     height={this.state.editorHeight} />
-                <Console theme={this.state.theme} 
-                    width={this.state.consoleWidth} 
+                <Console theme={this.state.theme}
+                    width={this.state.consoleWidth}
                     height={this.state.consoleHeight} />
             </SplitPane>
             {/* <div className="Footer"> <p>Footer</p></div> */}

@@ -1,12 +1,11 @@
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import CodeEditorToolbar from './CodeEditorToolbar';
 
 export default class CodeEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             value: `import java.io.*;
 import java.util.*;
 
@@ -22,7 +21,7 @@ public class Solution {
     }
 
     editor = null;
-    
+
 
     editorDidMount = (editor) => {
         console.log('editorDidMount', editor, editor.getValue(), editor.getModel());
@@ -64,10 +63,10 @@ public class Solution {
         console.log('Rendering CodeEditor');
         return (
             <div className={'CodeEditor'}>
-                <CodeEditorToolbar />
-                <MonacoEditor className={'MonacoCodeEditor'}
+                <MonacoEditor
                     {...this.state}
                     {...this.props}
+                    height="calc(100% - 55px)"
                     options={options}
                     onChange={this.onChange}
                     editorDidMount={this.editorDidMount}
