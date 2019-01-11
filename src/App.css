@@ -6,24 +6,75 @@
   border-right: 5px solid hsla(0,0%,100%,0);
   cursor: col-resize;
 }
+
 .Resizer {
   background: #22282e;
+  opacity: .9;
   z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
   background-clip: padding-box;
+}
+
+.Resizer:hover {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
 }
 
 .CodeEditor {
   width: 100%;
-  height: auto;
+  height: 100%;
   z-index: 1;
 }
 
+
 .Console {
   width: 100%;
-  height: auto;
+  height: 100%;
   z-index: 1;
 }
 
 .Console .cursor {
   display: none !important;
 }
+
+.Footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:#22282e;
+  color: white;
+  text-align: center;
+  height: 50px;
+  z-index: 2;
+}
+
+.CodeEditorToolbar {
+  background-color:#22282e;
+  color: white;
+  height: 55px;
+  margin: auto;
+  padding: 10px 10px;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+}
+
+.SplitPane {
+  justify-content: stretch;
+  align-items: flex-start;
+}
+
+html {
+  /* Size of largest container or bigger */
+  min-width: 1080px;
+}
+
+body {
+  overflow: hidden;
+}
+

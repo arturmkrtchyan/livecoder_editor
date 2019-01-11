@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import MonacoEditor from 'react-monaco-editor'; // Reference: https://github.com/superRaytin/react-monaco-editor
+import MonacoEditor from 'react-monaco-editor';
+import CodeEditorToolbar from './CodeEditorToolbar';
 
 export default class CodeEditor extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = { 
             value: `import java.io.*;
 import java.util.*;
@@ -17,11 +17,7 @@ public class Solution {
     public static void main(String[] args) {
         System.out.println("Hello world");
     }
-}`, 
-            language: 'java', 
-            theme: "vs-dark",
-            width: 0,
-            height: 0 
+}`
         };
     }
 
@@ -34,8 +30,19 @@ public class Solution {
         this.editor = editor;
     }
 
+    componentDidUpdate = () => {
+        this.editor.layout();
+    }
+
     onChange = (newValue, e) => {
         console.log('onChange', newValue, e); // eslint-disable-line no-console
+        this.setState((prevState, props) => {
+            return {
+                ...prevState,
+                value: newValue
+            }
+        });
+        this.editor.layout();
     }
 
     render() {
@@ -48,33 +55,24 @@ public class Solution {
             cursorStyle: 'line',
             automaticLayout: false,
             wordWrap: 'on',
-            scrollBeyondLastLine: false
+            scrollBeyondLastLine: false,
+            scrollbar: {
+                vertical: 'visible',
+                verticalScrollbarSize: 5
+            }
         };
-        //console.log('render');
+        console.log('Rendering CodeEditor');
         return (
-            <div className={`CodeEditor`}>
-                <MonacoEditor
+            <div className={'CodeEditor'}>
+                <CodeEditorToolbar />
+                <MonacoEditor className={'MonacoCodeEditor'}
                     {...this.state}
+                    {...this.props}
                     options={options}
                     onChange={this.onChange}
                     editorDidMount={this.editorDidMount}
                 />
             </div>
         );
-    }
-
-    componentDidMount() {
-        // ugly workaround
-        window.addEventListener('mousemove', () => this.updateDimensions());
-        this.updateDimensions();
-    }
-    
-    updateDimensions() {
-        const { innerHeight } = window;
-        // ugly workaround
-        const { offsetWidth } = ReactDOM.findDOMNode(this).parentNode;
-        const width = offsetWidth;
-        const height = innerHeight;
-        this.setState({ width, height });
     }
 }
